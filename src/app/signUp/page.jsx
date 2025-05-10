@@ -47,7 +47,7 @@ export default function SignUp() {
                         <input id="address" type="text" placeholder="Endereço" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>
                     </div>
                     <div>
-                        <button className="font-semibold mt-4 mb-2 w-[300px] h-[36px] rounded bg-blue-500 text-white hover:cursor-pointer">Cadastre-se</button>
+                        <button className="font-semibold mt-4 mb-2 w-[300px] h-[36px] rounded bg-blue-500 text-white hover:cursor-pointer">Cadastrar</button>
                     </div>
                     <div className="mb-10">
                         <p>Já possui uma conta? Fazer Login</p>
