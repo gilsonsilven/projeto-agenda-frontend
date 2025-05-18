@@ -1,4 +1,3 @@
-import Home from "../page"
 
 import HomepageImage from "@/components/HomepageImage.jsx"
 
