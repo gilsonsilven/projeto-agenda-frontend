@@ -10,7 +10,7 @@ export default function PageLayout({children}) {
             <div>
                 <SideMenu />
             </div>
-            <div>
+            <div className="bg-[#f5f5f5] col-span-6">
                 {children}
             </div>
             
