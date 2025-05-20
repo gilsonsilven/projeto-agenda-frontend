@@ -5,6 +5,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import 'dayjs/locale/pt-br';
+import Link from "next/link";
 
 
 export default function SignUp() {
@@ -50,7 +51,7 @@ export default function SignUp() {
                         <button className="font-semibold mt-4 mb-2 w-[300px] h-[36px] rounded bg-blue-500 text-white hover:cursor-pointer">Cadastrar</button>
                     </div>
                     <div className="mb-10">
-                        <p>Já possui uma conta? Fazer Login</p>
+                        <p>Já possui uma conta? <Link href={"/signIn"} className="text-blue-500 font-semibold">Fazer Login</Link></p>
                     </div>
                 </div>
             </div>

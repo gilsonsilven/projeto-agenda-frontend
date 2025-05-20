@@ -1,11 +1,7 @@
-import Image from "next/image";
+import SignIn from "./signIn/page.jsx";
 
 export default function Home() {
   return (
-    <>
-      <div className="bg-black w-auto h-auto">
-
-      </div>
-    </>
+    <SignIn />
   );
 }

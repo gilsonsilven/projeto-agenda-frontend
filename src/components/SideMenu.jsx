@@ -30,7 +30,7 @@ export default function SideMenu() {
                 <div className="">
                     <MenuLink Icon={Profile} href={"/about_blank"} text={"perfil usuário"}/>
                     <MenuLink Icon={House2} href={"/homepage"} text={"homepage usuário"}/>
-                    <MenuLink Icon={Calendar} href={"/about_blank"} text={"Eventos"}/>
+                    <MenuLink Icon={Calendar} href={"/events"} text={"Eventos"}/>
                     <MenuLink Icon={People} href={"/contacts"} text={"Contatos"}/>
                 </div>
                 <div className="mt-auto">

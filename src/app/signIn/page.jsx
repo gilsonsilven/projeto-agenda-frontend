@@ -1,5 +1,6 @@
 
 import HomepageImage from "@/components/HomepageImage.jsx"
+import Link from "next/link";
 
 
 export default function SignIn() {
@@ -19,8 +20,8 @@ export default function SignIn() {
                     <div>
                         <button className="font-semibold mt-4 mb-2 w-[300px] h-[36px] rounded bg-blue-500 text-white hover:cursor-pointer">Entrar</button>
                     </div>
-                    <div className="mb-10">
-                        <p>Não possui uma conta? Cadastre-se</p>
+                    <div className="mb-70">
+                        <p>Não possui uma conta? <Link href={"/signUp"} className="text-blue-500 font-semibold">Cadastre-se</Link></p>
                     </div>
                 </div>
             </div>
