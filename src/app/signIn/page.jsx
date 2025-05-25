@@ -1,5 +1,5 @@
 
-import HomepageImage from "@/components/HomepageImage.jsx"
+import HomePageImage from "@/components/HomePageImage.jsx"
 import Link from "next/link";
 
 
@@ -26,7 +26,7 @@ export default function SignIn() {
                 </div>
             </div>
             <div className="w-1/2">
-                <HomepageImage />
+                <HomePageImage />
             </div>
         </div>
     );

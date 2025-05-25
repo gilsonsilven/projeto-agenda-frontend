@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function HomepageImage() {
+export default function HomePageImage() {
     return (
         
         <Image className='size-full'

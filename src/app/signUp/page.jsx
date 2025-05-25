@@ -1,6 +1,6 @@
 'use client'
 
-import HomepageImage from "@/components/HomepageImage.jsx";
+import HomePageImage from "@/components/HomePageImage.jsx";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -56,7 +56,7 @@ export default function SignUp() {
                 </div>
             </div>
             <div className="w-1/2">
-                <HomepageImage />
+                <HomePageImage />
             </div>
         </div>
     );
