@@ -2,25 +2,48 @@
 
 import { Scheduler } from "@aldabil/react-scheduler";
 
+
 export default function HomePageScheduler() {
     return (
         <Scheduler
   view="month"
-  events={[
+  agenda={false}
+
+  ////teste
+
+  fields={[
     {
-      event_id: 1,
-      title: "Event 1",
-      start: new Date("2021/5/2 09:30"),
-      end: new Date("2021/5/2 10:30"),
+      name: "user_id",
+      type: "select",
+      // Should provide options with type:"select"
+      options: [
+        { id: 1, text: "John", value: 1 },
+        { id: 2, text: "Mark", value: 2 }
+      ],
+      config: { label: "User", required: true, errMsg: "Plz Select User" }
     },
     {
-      event_id: 2,
-      title: "Event 2",
-      start: new Date("2021/5/4 10:00"),
-      end: new Date("2021/5/4 11:00"),
+      name: "Description",
+      type: "input",
+      default: "Default Value...",
+      config: { label: "Details", multiline: true, rows: 4 }
     },
+    {
+      name: "anotherdate",
+      type: "date",
+      config: {
+        label: "Other Date",
+        md: 6,
+        type: "datetime"
+      }
+    }
   ]}
-/>
-    )
+
+  //////
+
+
+ 
+    />
+    );
 
 }
