@@ -1,20 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/pt-br';
+import dayjs from 'dayjs';
 
-export default function ContactModalLayout({title, isOpen, onClose, initialContactData = {}, onSubmit}) {
+export default function ContactModalLayout({title, isOpen, onClose, initialContactData, onSubmit}) {
 
 
     // id do usuario que está logado vem da onde? Pesquisar depois
     const [id_user] = useState(1);
     ///////
-
-
-
 
     const [contactData, setContactData] = useState({
         id_user: id_user, // id do usuário que está logado
@@ -22,9 +20,25 @@ export default function ContactModalLayout({title, isOpen, onClose, initialConta
         email: '',
         birth_date: null,
         phone: '',
-        address: '',
-        ...initialContactData // Preenche com os dados iniciais // para uso no modal de edição
+        address: ''
     });
+
+    useEffect(() => {
+        if (initialContactData && typeof initialContactData === 'object' && Object.keys(initialContactData).length > 0) {
+            setContactData({
+            id_user: initialContactData.id_user ?? id_user,
+            id_contact: initialContactData.id_contact ?? '',
+            name: initialContactData.name ?? '',
+            email: initialContactData.email ?? '',
+            birth_date: initialContactData.birth_date ? dayjs(initialContactData.birth_date) : null,
+            phone: initialContactData.phone ?? '',
+            address: initialContactData.address ?? ''
+            });
+        }
+    }, [initialContactData]);
+
+
+
 
     const handleChange = (e) => {
         setContactData({...contactData, [e.target.id]: e.target.value});
@@ -38,6 +52,7 @@ export default function ContactModalLayout({title, isOpen, onClose, initialConta
     const handleSubmit = async (e) => {
 
         e.preventDefault(); 
+
 
         onSubmit(contactData)
         /// tratar aqui depois
