@@ -3,7 +3,7 @@
 import PageLayout from "@/components/PageLayout.jsx"
 import AddContact from "@/components/AddContact.jsx"
 import EditContact from "@/components/EditContact.jsx";
-import { getContacts } from "@/api/contact.js";
+import { getContacts, deleteContact } from "@/api/contact.js";
 import { useState, useEffect } from "react";
 import {
     Bag,
@@ -17,6 +17,7 @@ export default function Contacts() {
 
     const [addModalOpen, setAddModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
+    const [contactDeletedFlag, setContactDeletedFlag] = useState(false)
 
     const [contactList, setContactList] = useState([]);
     const [selectedContact, setSelectedContact] = useState(''); //pegar o id do contato para editar as info do contato
@@ -50,7 +51,7 @@ export default function Contacts() {
         
         loadContactList();
          
-    }, [addModalOpen, editModalOpen]); 
+    }, [addModalOpen, editModalOpen, contactDeletedFlag]); 
 
     
     const handleEditClick = (id_contact) => {
@@ -59,9 +60,31 @@ export default function Contacts() {
         console.log("contacts linha 58 - ",data)
         setSelectedContact(data);
 
-        
-
         setEditModalOpen(true);
+    }
+
+
+    const handleDeleteClick = (id_contact) => {
+
+
+        if (!window.confirm("Tem certeza que deseja excluir este contato?")) {
+            return;
+        }
+
+        const data = contactList.find(c => c.id_contact === id_contact);
+        console.log("contacts linha 68 - ",data)
+
+        const removeContact = async (data) => {
+
+            const response = await deleteContact(data)
+
+            console.log(response);
+            setContactDeletedFlag(true);
+
+        }
+
+        removeContact(data);
+        
     }
 
     return (
@@ -98,7 +121,7 @@ export default function Contacts() {
                                         <td className="h-12">
                                             <div className="flex justify-center">
                                                 <Edit onClick={() => handleEditClick(val.id_contact) } size={20} color="#555555" className="mx-2 cursor-pointer" />
-                                                <Bag size={20} color="#555555" className="mx-2 cursor-pointer" />
+                                                <Bag onClick={() => handleDeleteClick(val.id_contact) } size={20} color="#555555" className="mx-2 cursor-pointer" />
                                             </div>
                                         </td>
                                     </tr>
