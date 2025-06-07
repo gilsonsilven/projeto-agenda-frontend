@@ -2,7 +2,6 @@
 import Link from "next/link";
 import {
     Profile,
-    House2,
     Calendar,
     People,
     Logout
@@ -29,7 +28,6 @@ export default function SideMenu() {
             <nav className="flex flex-col h-full">
                 <div className="">
                     <MenuLink Icon={Profile} href={"/about_blank"} text={"perfil usuário"}/>
-                    <MenuLink Icon={House2} href={"/homepage"} text={"homepage usuário"}/>
                     <MenuLink Icon={Calendar} href={"/events"} text={"Eventos"}/>
                     <MenuLink Icon={People} href={"/contacts"} text={"Contatos"}/>
                 </div>
