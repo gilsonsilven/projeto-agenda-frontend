@@ -2,22 +2,19 @@
 
 
 const API_BASE_URL = 'http://localhost:3001';
-
+const id_user = 1; // Placeholder for user ID, replace with actual logic to get logged-in user ID
+// deixar id_user como variável global para não precisar passar em todas as funções
 
 
 export async function createContact(contactData) {
 
     /// mudar a lógica para pegar o id do usuário que está logado
-    const id_user = contactData.id_user;
-
-
+    //const id_user = contactData.id_user;
 
     const data = {
         ...contactData,
         birth_date: contactData.birth_date ? contactData.birth_date.toDate() : null
     };
-
- 
 
     const response = await fetch(`${API_BASE_URL}/contacts/user/${id_user}`, {
         method: 'POST',
@@ -35,7 +32,7 @@ export async function createContact(contactData) {
 }
 
 
-export async function getContacts(id_user) {
+export async function getContacts() {
 
 
     const response = await fetch(`${API_BASE_URL}/contacts/user/${id_user}/list`, {
@@ -70,7 +67,6 @@ export async function updateContact(contactData) {
 
     
     return result;
-
 }
 
 

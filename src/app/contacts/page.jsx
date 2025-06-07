@@ -30,7 +30,7 @@ export default function Contacts() {
 
 
     ///// Mudar lógica de como pegar id do usuário 
-    const id_user = 1;
+    //const id_user = 1;
 
     ///tratar isso aqui depois
     useEffect(() => {
@@ -38,9 +38,8 @@ export default function Contacts() {
       
         const loadContactList = async () => {
 
-            console.log(id_user)
-
-            const data = await getContacts(id_user);
+            
+            const data = await getContacts();
             /// tratar aqui depois
             console.log(data);
 
@@ -57,7 +56,7 @@ export default function Contacts() {
     const handleEditClick = (id_contact) => {
 
         const data = contactList.find(c => c.id_contact === id_contact);
-        console.log("contacts linha 58 - ",data)
+        
         setSelectedContact(data);
 
         setEditModalOpen(true);
@@ -72,13 +71,13 @@ export default function Contacts() {
         }
 
         const data = contactList.find(c => c.id_contact === id_contact);
-        console.log("contacts linha 68 - ",data)
+   
 
         const removeContact = async (data) => {
 
             const response = await deleteContact(data)
 
-            console.log(response);
+   
             setContactDeletedFlag(true);
 
         }
