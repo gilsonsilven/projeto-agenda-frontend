@@ -57,6 +57,16 @@ export default function ContactModalLayout({title, isOpen, onClose, initialConta
         onSubmit(contactData)
         /// tratar aqui depois
 
+        //// limpa os campos do formulário
+        setContactData({
+            id_user: id_user,
+            name: '',
+            email: '',
+            birth_date: null,
+            phone: '',
+            address: ''
+        });
+
     }
 
     if (!isOpen) return null;
