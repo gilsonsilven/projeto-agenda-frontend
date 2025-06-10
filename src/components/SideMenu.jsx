@@ -1,7 +1,7 @@
 
 import Link from "next/link";
+import UserProfile from "./UserProfile.jsx";
 import {
-    Profile,
     Calendar,
     People,
     Logout
@@ -27,7 +27,7 @@ export default function SideMenu() {
         
             <nav className="flex flex-col h-full">
                 <div className="">
-                    <MenuLink Icon={Profile} href={"/about_blank"} text={"perfil usuário"}/>
+                    <UserProfile/>
                     <MenuLink Icon={Calendar} href={"/events"} text={"Eventos"}/>
                     <MenuLink Icon={People} href={"/contacts"} text={"Contatos"}/>
                 </div>
