@@ -2,7 +2,7 @@
 
 import { updateContact } from "@/api/contact.js";
 import ContactModalLayout from "./ContactModalLayout.jsx";
-import { useState } from "react";
+
 
 export default function EditContact({ isOpen, onClose, contactData}) {
 

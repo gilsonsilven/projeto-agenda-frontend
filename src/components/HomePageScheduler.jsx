@@ -4,6 +4,8 @@ import { Scheduler } from "@aldabil/react-scheduler";
 import { createEvent, getEvents, updateEvent, deleteEvent } from "@/api/events.js";
 import { getContacts } from "@/api/contact.js";
 import { useEffect, useState } from "react";
+import { ptBR } from "date-fns/locale";
+
 
 export default function HomePageScheduler() {
 
@@ -124,10 +126,30 @@ export default function HomePageScheduler() {
           // carregar a lista de contatos do usuário logado
           // depois
           options: contactList,
-          config: { label: "Contatos", multiple: true}
+          config: { label: "Contatos", multiple: true, placeholder: "Selecione os contatos" }
         },          
       ]}
       key={contactList.length}
+      locale={ ptBR }
+      translations={{
+        navigation: {
+          today: "hoje",
+          month: "mês",
+          week: "semana"
+        },
+        form: {
+          addTitle: "Adicionar Evento",
+          editTitle: "Editar Evento",
+          confirm: "Salvar",
+          delete: "Excluir",
+          cancel: "Cancelar"
+        },
+        event: {
+          title: "Título",
+          start: "Início",
+          end: "Fim"
+        },                
+      }}
     
     />
   );
