@@ -2,7 +2,7 @@
 
 
 const API_BASE_URL = 'http://localhost:3001';
-const id_user = 1; // Placeholder for user ID, replace with actual logic to get logged-in user ID
+const id_user = 6; // Placeholder for user ID, replace with actual logic to get logged-in user ID
 // deixar id_user como variável global para não precisar passar em todas as funções
 
 
@@ -86,6 +86,25 @@ export async function deleteContact(contactData) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({id_contact})
+    });
+
+    const result = await response.json();
+
+    
+    return result;    
+}
+
+
+export async function deleteAllContacts() {
+
+    /// mudar a lógica para pegar o id do usuário que está logado
+    //const id_user = contactData.id_user;
+
+    const response = await fetch(`${API_BASE_URL}/contacts/user/${id_user}/list`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 
     const result = await response.json();

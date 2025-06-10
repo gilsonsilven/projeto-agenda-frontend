@@ -4,7 +4,7 @@
 const API_BASE_URL = 'http://localhost:3001';
 /// mudar a lógica para pegar o id do usuário que está logado
 // id do usuário não está em eventData
-const id_user = 1; // Placeholder for user ID, replace with actual logic to get logged-in user ID
+const id_user = 6; // Placeholder for user ID, replace with actual logic to get logged-in user ID
 
 export async function createEvent(eventData) {
 
@@ -58,7 +58,7 @@ export async function getEvents() {
         ...event,
         start: new Date(event_start_date),
         end: new Date(event_end_date),
-        contacts: contact_names ? contact_names.split(',') : [], // passa de string para array de strings
+        contacts: contact_names ? contact_names.split(', ') : [], // passa de string para array de strings
         event_id: id_event
         //contacts: event.contact_names ? event.contact_names.split(',') : []
 
@@ -127,3 +127,20 @@ export async function deleteEvent(event_id) {
 }
 
 
+export async function deleteAllEvents() {
+
+        /// mudar a lógica para pegar o id do usuário que está logado
+    //const id_user = contactData.id_user;
+
+    const response = await fetch(`${API_BASE_URL}/events/user/${id_user}/list`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const result = await response.json();
+
+    
+    return result;    
+}
