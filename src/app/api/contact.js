@@ -1,13 +1,18 @@
 
 
-
 const API_BASE_URL = 'http://localhost:3001';
-const id_user = 6; // Placeholder for user ID, replace with actual logic to get logged-in user ID
+
+
+
+
+//const id_user = 11
+
 // deixar id_user como variável global para não precisar passar em todas as funções
 
 
 export async function createContact(contactData) {
 
+    const id_user = contactData.id_user
     /// mudar a lógica para pegar o id do usuário que está logado
     //const id_user = contactData.id_user;
 
@@ -32,8 +37,7 @@ export async function createContact(contactData) {
 }
 
 
-export async function getContacts() {
-
+export async function getContacts(id_user) {
 
     const response = await fetch(`${API_BASE_URL}/contacts/user/${id_user}/list`, {
         headers: {
@@ -44,6 +48,8 @@ export async function getContacts() {
     });
 
     const result = await response.json();
+
+    console.log(result.contacts)
 
     
     return result;
@@ -77,8 +83,6 @@ export async function deleteContact(contactData) {
     /// mudar a lógica para pegar o id do usuário que está logado
     const {id_user, id_contact, ...data} = contactData;
 
-    console.log("api contact linha 84: ",typeof(id_contact))
-
 
     const response = await fetch(`${API_BASE_URL}/contacts/user/${id_user}`, {
         method: 'DELETE',
@@ -95,7 +99,7 @@ export async function deleteContact(contactData) {
 }
 
 
-export async function deleteAllContacts() {
+export async function deleteAllContacts(id_user) {
 
     /// mudar a lógica para pegar o id do usuário que está logado
     //const id_user = contactData.id_user;

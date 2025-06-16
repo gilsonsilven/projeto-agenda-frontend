@@ -1,7 +1,10 @@
+import { signIn } from "next-auth/react";
 
 const API_BASE_URL = 'http://localhost:3001';
-const id_user = 6; // Placeholder for user ID, replace with actual logic to get logged-in user ID
+//const id_user = 11; // Placeholder for user ID, replace with actual logic to get logged-in user ID
 // deixar id_user como variável global para não precisar passar em todas as funções
+
+
 
 export async function createUser(userData) {
 
@@ -10,11 +13,9 @@ export async function createUser(userData) {
         birth_date: userData.birth_date ? userData.birth_date.toDate() : null
         
     }
-    
-    console.log(data);
-    console.log(userData)
 
-    const response = await fetch(`${API_BASE_URL}/user`, {
+
+    const response = await fetch(`${API_BASE_URL}/auth`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -30,7 +31,7 @@ export async function createUser(userData) {
 } 
 
 
-export async function getUser() { // precisa receber o id do usuário logado como parâmetro
+export async function getUser(id_user) { // precisa receber o id do usuário logado como parâmetro
 
     const response = await fetch(`${API_BASE_URL}/user/${id_user}`, {
     headers: {
@@ -41,16 +42,15 @@ export async function getUser() { // precisa receber o id do usuário logado com
 
     const result = await response.json();
 
-    console.log("api user linha 44:",result);
-
+    console.log("get user linha 45", result.user)
     
-    return result;
+    return result.user;
 }
 
 
 export async function updateUser(userData) {
 
-    const response = await fetch(`${API_BASE_URL}/user/${id_user}`, {
+    const response = await fetch(`${API_BASE_URL}/user/${userData.id_user}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -65,13 +65,10 @@ export async function updateUser(userData) {
 }
 
 
-export async function deleteUser() {
+export async function deleteUser(userData) {
 
     /// mudar a lógica para pegar o id do usuário que está logado
-
-
-    console.log("api user linha 84: ",typeof(id_user));
-
+    const id_user = userData.id_user;
 
     const response = await fetch(`${API_BASE_URL}/user/${id_user}`, {
         method: 'DELETE',
@@ -86,6 +83,28 @@ export async function deleteUser() {
     
     return result;        
 
+}
 
 
+export async function loginUser(userData) {
+
+    const email = userData.email;
+    const password = userData.password;
+    
+    const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false
+    });
+
+
+    console.log(result)
+
+    if (result.ok) {
+        return result
+    // login falhou
+    } else {
+        return console.log("deu ruim")
+    // login bem sucedido
+    }
 }

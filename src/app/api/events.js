@@ -4,9 +4,9 @@
 const API_BASE_URL = 'http://localhost:3001';
 /// mudar a lógica para pegar o id do usuário que está logado
 // id do usuário não está em eventData
-const id_user = 6; // Placeholder for user ID, replace with actual logic to get logged-in user ID
+//const id_user = 11; // Placeholder for user ID, replace with actual logic to get logged-in user ID
 
-export async function createEvent(eventData) {
+export async function createEvent(eventData, id_user) {
 
     const data = {
         ...eventData,
@@ -19,7 +19,6 @@ export async function createEvent(eventData) {
     delete data.start
     delete data.end
 
-    console.log("api event linha 17:", data);
  
 
     const response = await fetch(`${API_BASE_URL}/events/user/${id_user}`, {
@@ -38,7 +37,7 @@ export async function createEvent(eventData) {
 }
 
 
-export async function getEvents() {
+export async function getEvents(id_user) {
 
 
     const response = await fetch(`${API_BASE_URL}/events/user/${id_user}/list`, {
@@ -53,7 +52,7 @@ export async function getEvents() {
 
     /// tratar caso não tenha eventos
     /// tratar propriedades pois se não tiver o nome correto, o scheduler não renderiza
-    const formattedEvents = result.map(
+    const formattedEvents = result.events.map(
         ({ event_start_date, event_end_date, contact_names, id_event, ...event }) => ({
         ...event,
         start: new Date(event_start_date),
@@ -85,10 +84,10 @@ export async function updateEvent(eventData) {
     delete data.end;
     delete data.event_id;
 
-    console.log("api event linha 17:", data.contact_names);
+
  
 
-    const response = await fetch(`${API_BASE_URL}/events/user/${id_user}`, {
+    const response = await fetch(`${API_BASE_URL}/events/user/${eventData.id_user}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -97,18 +96,16 @@ export async function updateEvent(eventData) {
     });
 
     const result = await response.json();
-
     
     return result;
 
 }
 
 
-export async function deleteEvent(event_id) {
+export async function deleteEvent(event_id, id_user) {
 
     const id_event = event_id;
 
-    console.log("api event delete linha 122:", id_event);
  
 
     const response = await fetch(`${API_BASE_URL}/events/user/${id_user}`, {
@@ -127,7 +124,7 @@ export async function deleteEvent(event_id) {
 }
 
 
-export async function deleteAllEvents() {
+export async function deleteAllEvents(id_user) {
 
         /// mudar a lógica para pegar o id do usuário que está logado
     //const id_user = contactData.id_user;
@@ -142,5 +139,5 @@ export async function deleteAllEvents() {
     const result = await response.json();
 
     
-    return result;    
+    return result.events;    
 }
