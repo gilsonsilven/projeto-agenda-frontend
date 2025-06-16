@@ -1,6 +1,6 @@
 'use client'
 
-import { updateContact } from "@/api/contact.js";
+import { updateContact } from "@/app/api/contact.js";
 import ContactModalLayout from "./ContactModalLayout.jsx";
 
 

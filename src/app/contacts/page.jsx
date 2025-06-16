@@ -3,17 +3,22 @@
 import PageLayout from "@/components/PageLayout.jsx"
 import AddContact from "@/components/AddContact.jsx"
 import EditContact from "@/components/EditContact.jsx";
-import { getContacts, deleteContact } from "@/api/contact.js";
+import { getContacts, deleteContact } from "@/app/api/contact.js";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
     Bag,
     Edit
 } from "iconsax-react"
-
+import { useSession } from "next-auth/react";
 
 
 
 export default function Contacts() {
+
+    const {data: session, status} = useSession();
+    const id_user = session?.user?.id_user;   
+    const router = useRouter();
 
     const [addModalOpen, setAddModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
@@ -23,8 +28,28 @@ export default function Contacts() {
     const [selectedContact, setSelectedContact] = useState(''); //pegar o id do contato para editar as info do contato
 
 
+    if (status === "loading") {
+        return (
+            <div className="flex flex-col justify-center items-center h-screen">
+                <p className="mb-4">Carregando...</p>
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+            </div>
+        )
+    }
 
-    /// Tratar data de nascimento do contato
+    if (status === "unauthenticated") {
+        const timer = setTimeout(() => {
+            router.push("/signIn");
+        }, 5000)
+
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p>Você precisa estar logado para acessar esta página. Redirecionando...</p>
+            </div>
+        )
+    }
+
+
     /// tratar caso não tenha contatos cadastrados
     /// tratar caso não conecte no backend
 
@@ -39,12 +64,12 @@ export default function Contacts() {
         const loadContactList = async () => {
 
             
-            const data = await getContacts();
+            const data = await getContacts(id_user);
             /// tratar aqui depois
             console.log(data);
 
             
-            setContactList(data)
+            setContactList(data.contacts)
         };
 
         

@@ -1,14 +1,17 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { getUser } from "@/api/user.js";
+import { getUser } from "@/app/api/user.js";
 import EditUserModal from "./EditUserModal.jsx";
 import {
     Profile
 } from "iconsax-react";
+import { useSession } from "next-auth/react";
 
 export default function UserProfile() { 
 
+    const {data: session} = useSession();
+    const id_user = session?.user?.id_user;
     const [userData, setUserData] = useState([]);
     const [editModalOpen, setEditModalOpen] = useState(false);
 
@@ -17,7 +20,7 @@ export default function UserProfile() {
 
         const loadUserData = async () => {
             
-            const data = await getUser();
+            const data = await getUser(id_user);
             console.log("User data loaded:", data);
             setUserData(data);
 

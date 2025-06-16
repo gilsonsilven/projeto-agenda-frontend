@@ -1,38 +1,45 @@
 'use client';
 
 import { Scheduler } from "@aldabil/react-scheduler";
-import { createEvent, getEvents, updateEvent, deleteEvent } from "@/api/events.js";
-import { getContacts } from "@/api/contact.js";
+import { createEvent, getEvents, updateEvent, deleteEvent } from "@/app/api/events.js";
+import { getContacts } from "@/app/api/contact.js";
 import { useEffect, useState } from "react";
 import { ptBR } from "date-fns/locale";
+import { useSession } from "next-auth/react";
 
 
 export default function HomePageScheduler() {
 
+  const {data: session, status} = useSession();
+  const id_user = session?.user?.id_user;
+
   const [eventList, setEventList] = useState([]);
   const [deletedEventFlag, setDeletedEventFlag] = useState(false);
+  const [createdEventFlag, setCreatedEventFlag] = useState(false);
   const [contactList, setContactList] = useState([]);
-
 
   useEffect(() => {
     const loadEventList = async () => {
-      const data = await getEvents();
+      const data = await getEvents(id_user);
       /// tratar aqui depois
-      console.log(data);
 
       
       setEventList(data)
+
+    
+      setCreatedEventFlag(false);
+      setDeletedEventFlag(false);
     };
 
     loadEventList();
       
-  }, [deletedEventFlag]);
+  }, [deletedEventFlag, createdEventFlag]);
   
 
   useEffect(() => {
     const loadContacts = async () => {
-      const result = await getContacts(); 
-      const data = result.map((c) => ({
+      const result = await getContacts(id_user); 
+      const data = result.contacts.map((c) => ({
         id: c.id_contact,
         text: c.name,
         value: c.name
@@ -47,12 +54,14 @@ export default function HomePageScheduler() {
 
   const handleSubmit = async (event) => {
 
+
     if(event.event_id === null) {
       const {subtitle, Start, event_id, ...data} = event
 
-      const response = await createEvent(data);
+      const response = await createEvent(data, id_user);
 
-      console.log("Event created: linha 15", response);
+
+      setCreatedEventFlag(true);
 
       return {event_id: response.event_id, ...event};
     }
@@ -62,23 +71,16 @@ export default function HomePageScheduler() {
 
       const response = await updateEvent(data);
 
-      console.log("Event updated: linha 15", response);
-
       return {event_id: response.event_id, ...event};      
 
     }
-    //return {event_id: 1, ...event}
+
   } 
 
   const handleDelete = async (event) => {
 
-    console.log("handleDelete: linha 54", event);
 
-    //const {subtitle, Start, ...data} = event
-
-    const response = await deleteEvent(event);
-
-    console.log("Event deleted: linha 15", response);
+    const response = await deleteEvent(event, id_user);
 
     setDeletedEventFlag(true);
 
@@ -109,9 +111,7 @@ export default function HomePageScheduler() {
             label: "Endereço"
           }
         },
-        {
-          name: "Start"
-        },          
+
         {
           name: "description",
           type: "input",

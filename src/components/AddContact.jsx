@@ -1,13 +1,19 @@
 'use client';
 
 
-import { createContact } from "@/api/contact.js";
+import { createContact } from "@/app/api/contact.js";
 import ContactModalLayout from "./ContactModalLayout.jsx";
+import { useSession } from "next-auth/react";
+
 
 
 export default function AddContact({ isOpen, onClose  }) {
 
+    const {data: session} = useSession();
+
     const handleSubmit = async (contactData) => {
+
+        contactData.id_user = session.user.id_user;
 
         const response = await createContact(contactData);
 

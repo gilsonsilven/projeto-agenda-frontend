@@ -6,19 +6,21 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/pt-br';
 import dayjs from 'dayjs';
-import { updateUser, deleteUser } from '@/api/user.js';
-import { deleteAllContacts } from '@/api/contact.js';
-import { deleteAllEvents } from '@/api/events.js';
+import { updateUser, deleteUser } from '@/app/api/user.js';
+import { deleteAllContacts } from '@/app/api/contact.js';
+import { deleteAllEvents } from '@/app/api/events.js';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 export default function EditUserModal({isOpen, onClose, initialUserData}) {
 
-
-    // id do usuario que está logado vem da onde? Pesquisar depois
+    const {data: session} = useSession();
+    
     const router = useRouter();
+    const id_user = session?.user?.id_user;
 
     const [userData, setUserData] = useState({
-        id_user: '', // id do usuário que está logado
+        id_user: id_user, // id do usuário que está logado
         name: '',
         email: '',
         birth_date: null,
@@ -29,7 +31,7 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
     useEffect(() => {
         if (initialUserData && typeof initialUserData === 'object' && Object.keys(initialUserData).length > 0) {
             setUserData({
-            id_user: initialUserData.id_user ?? '',
+            id_user: initialUserData.id_user ?? id_user,
             name: initialUserData.name ?? '',
             email: initialUserData.email ?? '',
             birth_date: initialUserData.birth_date ? dayjs(initialUserData.birth_date) : null,
@@ -78,16 +80,16 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
         }        
 
         try {
-            const contactList = await deleteAllContacts();
-            const eventList = await deleteAllEvents();
+            const contactList = await deleteAllContacts(id_user);
+            const eventList = await deleteAllEvents(id_user);
         }
         catch (error) {
             console.error("Erro ao deletar contatos ou eventos:", error);
-            // Aqui você pode adicionar uma mensagem de erro para o usuário
+         
         }
 
         router.push("/signIn");
-        //router.refresh();        
+       
     
         const response = await deleteUser(userData);
 

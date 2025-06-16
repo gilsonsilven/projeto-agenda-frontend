@@ -1,10 +1,10 @@
 
 import Link from "next/link";
 import UserProfile from "./UserProfile.jsx";
+import UserLogout from "./UserLogOut.jsx";
 import {
     Calendar,
-    People,
-    Logout
+    People
 } from "iconsax-react";
 
 
@@ -18,9 +18,10 @@ const MenuLink = ({ Icon, href, text }) => {
     )
 }
 
+//<MenuLink Icon={Logout} href={"/about_blank"} text={"Sair"}/>
 export default function SideMenu() {
 
- 
+
 
     return (
         <div className="p-4 bg-[#0c1222] h-full w-auto">
@@ -32,7 +33,7 @@ export default function SideMenu() {
                     <MenuLink Icon={People} href={"/contacts"} text={"Contatos"}/>
                 </div>
                 <div className="mt-auto">
-                    <MenuLink Icon={Logout} href={"/about_blank"} text={"Sair"}/>
+                    <UserLogout />
                 </div>
                     
             </nav>

@@ -7,7 +7,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import 'dayjs/locale/pt-br';
 import Link from "next/link";
 import { useState } from "react";
-import { createUser } from "@/api/user.js";
+import { createUser } from "@/app/api/user.js";
 
 export default function SignUp() {
 
