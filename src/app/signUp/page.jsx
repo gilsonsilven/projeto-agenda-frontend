@@ -8,8 +8,11 @@ import 'dayjs/locale/pt-br';
 import Link from "next/link";
 import { useState } from "react";
 import { createUser } from "@/app/api/user.js";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
+
+    const router = useRouter();
 
     const [userData, setUserData] = useState({
         name: '',
@@ -33,10 +36,21 @@ export default function SignUp() {
 
         e.preventDefault(); 
 
+        try {
+            const response = await createUser(userData);
+            
+        }
+        catch (error) {
+            alert(error.message);
+            return;
+        }
         
-        const response = await createUser(userData);
         /// tratar aqui depois
-        console.log(response);
+        alert("Usuário cadastrado com sucesso!"); 
+        const timer = setTimeout(() => {
+            router.push("/signIn");
+        }, 2000)
+        
 
     }
 

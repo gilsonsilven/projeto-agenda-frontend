@@ -11,6 +11,7 @@ import { deleteAllContacts } from '@/app/api/contact.js';
 import { deleteAllEvents } from '@/app/api/events.js';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import BackupModal from './BackupModal.jsx';
 
 export default function EditUserModal({isOpen, onClose, initialUserData}) {
 
@@ -19,6 +20,7 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
     const router = useRouter();
     const id_user = session?.user?.id_user;
 
+    const [backupModalOpen, setBackupModalOpen] = useState(false);
     const [userData, setUserData] = useState({
         id_user: id_user, // id do usuário que está logado
         name: '',
@@ -99,17 +101,23 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
         //onClose(); // fecha o modal depois de enviar     
     }
 
+    const handleBackupClick = (e) => {
+         
+        e.stopPropagation();
+        setBackupModalOpen(true);
+    }
+
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-[999] bg-black/25 flex justify-center items-center">
-            <form onSubmit={handleSubmit} className="h-auto w-auto bg-white p-6 mb-10 rounded-lg">
+            <form onSubmit={handleSubmit} className="h-auto w-auto bg-white p-6 mb-40 rounded-lg">
                 <div className="flex justify-center">
                     <h2 className="text-3xl font-semibold mb-1">Perfil</h2>
                 </div>  
                 <div className="flex justify-between mb-3">
                     <button onClick={handleDelete} className="font-semibold mt-4 mb-2 w-auto px-2 h-[36px] rounded bg-red-800 text-white text-[14px] hover:cursor-pointer">Deletar Contar?</button>
-                    <button className="font-semibold mt-4 mb-2 w-auto px-2 h-[36px] rounded bg-green-500 text-white text-[14px] hover:cursor-pointer">Realizar Backup?</button>
+                    <button onClick={handleBackupClick} className="font-semibold mt-4 mb-2 w-auto px-2 h-[36px] rounded bg-green-500 text-white text-[14px] hover:cursor-pointer">Realizar Backup?</button>
                 </div>
                 <div className="flex justify-center">
                     <h3 className="text-2xl font-semibold mb-1">Editar Dados</h3>
@@ -125,7 +133,7 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
                 </div>
                 <div className="my-4">
                     <LocalizationProvider adapterLocale="pt-br" dateAdapter={AdapterDayjs}>
-                        <DatePicker className="w-[300px] z-[9999]" id="birth_date" value={userData.birth_date} onChange={handleDateChange} fullWidth label="Data de nascimento" name="StartDate" slotProps={{ textField: 
+                        <DatePicker className="w-[300px] z-[9989]" id="birth_date" value={userData.birth_date} onChange={handleDateChange} fullWidth label="Data de nascimento" name="StartDate" slotProps={{ textField: 
                             {
                                 size: 'small',
                                 InputProps: {
@@ -145,6 +153,7 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
                 </div>
 
             </form>
+            <BackupModal backupModalIsOpen={backupModalOpen} backupModalOnClose={() => {setBackupModalOpen(false)}} />
         </div>
     )
 }
