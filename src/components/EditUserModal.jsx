@@ -44,8 +44,6 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
     }, [initialUserData]);
 
 
-
-
     const handleChange = (e) => {
         setUserData({...userData, [e.target.id]: e.target.value});
     };
@@ -101,23 +99,18 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
         //onClose(); // fecha o modal depois de enviar     
     }
 
-    const handleBackupClick = (e) => {
-         
-        e.stopPropagation();
-        setBackupModalOpen(true);
-    }
 
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-[999] bg-black/25 flex justify-center items-center">
-            <form onSubmit={handleSubmit} className="h-auto w-auto bg-white p-6 mb-40 rounded-lg">
+            <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} className="h-auto w-auto bg-white p-6 mb-20 rounded-lg">
                 <div className="flex justify-center">
                     <h2 className="text-3xl font-semibold mb-1">Perfil</h2>
                 </div>  
                 <div className="flex justify-between mb-3">
                     <button onClick={handleDelete} className="font-semibold mt-4 mb-2 w-auto px-2 h-[36px] rounded bg-red-800 text-white text-[14px] hover:cursor-pointer">Deletar Contar?</button>
-                    <button onClick={handleBackupClick} className="font-semibold mt-4 mb-2 w-auto px-2 h-[36px] rounded bg-green-500 text-white text-[14px] hover:cursor-pointer">Realizar Backup?</button>
+                    <button onClick={() => setBackupModalOpen(true)} type='button' className="font-semibold mt-4 mb-2 w-auto px-[34px] h-[36px] rounded bg-green-500 text-white text-[14px] hover:cursor-pointer">Backup</button>
                 </div>
                 <div className="flex justify-center">
                     <h3 className="text-2xl font-semibold mb-1">Editar Dados</h3>
@@ -153,7 +146,7 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
                 </div>
 
             </form>
-            <BackupModal backupModalIsOpen={backupModalOpen} backupModalOnClose={() => {setBackupModalOpen(false)}} />
+            <BackupModal backupModalIsOpen={backupModalOpen} backupModalOnClose={() => {setBackupModalOpen(false)}} onClose={onClose} id_user={id_user}/>
         </div>
     )
 }
