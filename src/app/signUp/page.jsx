@@ -35,15 +35,10 @@ export default function SignUp() {
     const handleSubmit = async (e) => {
 
         e.preventDefault(); 
+        
+        const response = await createUser(userData);
 
-        try {
-            const response = await createUser(userData);
-            
-        }
-        catch (error) {
-            alert(error.message);
-            return;
-        }
+
         
         /// tratar aqui depois
         alert("Usuário cadastrado com sucesso!"); 

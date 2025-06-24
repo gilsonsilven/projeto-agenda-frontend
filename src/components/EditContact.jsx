@@ -15,6 +15,8 @@ export default function EditContact({ isOpen, onClose, contactData}) {
         const response = await updateContact(contactData);
 
         
+        console.log("response", response.errors);
+
         alert(response.message);
 
         onClose(); 
