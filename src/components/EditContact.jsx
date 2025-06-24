@@ -15,10 +15,9 @@ export default function EditContact({ isOpen, onClose, contactData}) {
         const response = await updateContact(contactData);
 
         
-        // colocar uma mensagem de sucesso ou erro aqui
-        // lembrar de limpar os campos do modal depois de enviar
-        // adc algo para atualizar lista de contatos
-        onClose(); // fecha o modal depois de enviar
+        alert(response.message);
+
+        onClose(); 
 
     }
     

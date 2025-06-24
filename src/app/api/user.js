@@ -60,6 +60,10 @@ export async function updateUser(userData) {
 
     const result = await response.json();
 
+    console.log("update user linha 60", result)
+    if (result.error) {
+        throw new Error(result.error);
+    }
     
     return result;    
 }
@@ -67,7 +71,7 @@ export async function updateUser(userData) {
 
 export async function deleteUser(userData) {
 
-    /// mudar a lógica para pegar o id do usuário que está logado
+    
     const id_user = userData.id_user;
 
     const response = await fetch(`${API_BASE_URL}/user/${id_user}`, {
@@ -98,13 +102,12 @@ export async function loginUser(userData) {
     });
 
 
-    console.log(result)
+
 
     if (result.ok) {
         return result
-    // login falhou
+  
     } else {
-        return console.log("deu ruim")
-    // login bem sucedido
+        return console.log("erro"); 
     }
 }

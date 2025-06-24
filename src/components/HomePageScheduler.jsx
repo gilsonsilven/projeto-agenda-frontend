@@ -24,7 +24,7 @@ export default function HomePageScheduler() {
       /// tratar aqui depois
 
       
-      setEventList(data)
+      setEventList(data.formattedEvents)
 
     
       setCreatedEventFlag(false);
@@ -121,8 +121,6 @@ export default function HomePageScheduler() {
           name: "contacts",
           type: "select",
          
-          
-          // Should provide options with type:"select"
           // carregar a lista de contatos do usuário logado
           // depois
           options: contactList,

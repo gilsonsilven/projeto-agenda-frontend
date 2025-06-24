@@ -50,6 +50,8 @@ export async function getEvents(id_user) {
 
     const result = await response.json();
 
+    console.log("api events 53",result)
+    
     /// tratar caso não tenha eventos
     /// tratar propriedades pois se não tiver o nome correto, o scheduler não renderiza
     const formattedEvents = result.events.map(
@@ -59,12 +61,17 @@ export async function getEvents(id_user) {
         end: new Date(event_end_date),
         contacts: contact_names ? contact_names.split(', ') : [], // passa de string para array de strings
         event_id: id_event
-        //contacts: event.contact_names ? event.contact_names.split(',') : []
+
 
     }));
 
+    // formattedEvents são eventos já formatados para serem carregados no scheduler
+    const events = {
+        events: result.events,
+        formattedEvents: formattedEvents
+    }
     
-    return formattedEvents;
+    return events
 
 }
 
@@ -126,8 +133,6 @@ export async function deleteEvent(event_id, id_user) {
 
 export async function deleteAllEvents(id_user) {
 
-        /// mudar a lógica para pegar o id do usuário que está logado
-    //const id_user = contactData.id_user;
 
     const response = await fetch(`${API_BASE_URL}/events/user/${id_user}/list`, {
         method: 'DELETE',

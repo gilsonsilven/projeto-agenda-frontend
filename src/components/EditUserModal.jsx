@@ -57,17 +57,10 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
 
         e.preventDefault(); 
 
-        console.log("edit user modal linha 55: ", userData)
-
-        //// update user aqui
-        /// tratar aqui depois
-
         const response = await updateUser(userData);
 
-        
-        // colocar uma mensagem de sucesso ou erro aqui
-        // lembrar de limpar os campos do modal depois de enviar
-        // adc algo para atualizar lista de contatos
+        alert(response.message);
+
         onClose(); // fecha o modal depois de enviar        
     }
 
@@ -93,10 +86,6 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
     
         const response = await deleteUser(userData);
 
-        // colocar uma mensagem de sucesso ou erro aqui
-        // lembrar de limpar os campos do modal depois de enviar
-        // adc algo para atualizar lista de contatos
-        //onClose(); // fecha o modal depois de enviar     
     }
 
 

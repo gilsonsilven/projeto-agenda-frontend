@@ -5,16 +5,10 @@ const API_BASE_URL = 'http://localhost:3001';
 
 
 
-//const id_user = 11
-
-// deixar id_user como variável global para não precisar passar em todas as funções
-
-
 export async function createContact(contactData) {
 
     const id_user = contactData.id_user
-    /// mudar a lógica para pegar o id do usuário que está logado
-    //const id_user = contactData.id_user;
+
 
     const data = {
         ...contactData,

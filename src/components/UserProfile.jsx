@@ -21,7 +21,7 @@ export default function UserProfile() {
         const loadUserData = async () => {
             
             const data = await getUser(id_user);
-            console.log("User data loaded:", data);
+
             setUserData(data);
 
         };

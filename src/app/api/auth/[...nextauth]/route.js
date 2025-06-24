@@ -20,6 +20,7 @@ export const authOptions = {
               email: credentials.email,
               password: credentials.password
             }),
+            credentials: "include"
           });
 
           if (!res.ok) {
@@ -32,14 +33,7 @@ export const authOptions = {
           if (result?.accessToken) {
             return result; // Retorna tudo de uma vez
             
-            //return {
-              //id: data.user.id,
-              //name: data.user.name,
-              ///email: data.user.email,
-              //avatar: data.user.avatar,
-              //accessToken: data.accessToken,
-              //refreshToken: data.refreshToken
-            //};
+
           }
 
           return null;
@@ -58,7 +52,9 @@ export const authOptions = {
   session: {
     strategy: 'jwt',
     maxAge: 15 * 60, // 15 minutos pra ficar igual ao backend
+    updateAge: 12 * 60 // Atualiza o token a cada 5 minutos
   },
+
   callbacks: {
 
     /// user === result do authorize
@@ -88,7 +84,8 @@ export const authOptions = {
             headers: {
             "Content-Type": "application/json"
             },
-            body: JSON.stringify({ refreshToken: token.refreshToken })
+            body: JSON.stringify({ refreshToken: token.refreshToken }),
+            credentials: "include"
         });
 
         return response;

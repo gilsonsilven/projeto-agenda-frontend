@@ -49,31 +49,19 @@ export default function Contacts() {
         )
     }
 
-
-    /// tratar caso não tenha contatos cadastrados
-    /// tratar caso não conecte no backend
-
-
-    ///// Mudar lógica de como pegar id do usuário 
-    //const id_user = 1;
-
-    ///tratar isso aqui depois
     useEffect(() => {
 
       
         const loadContactList = async () => {
 
             
-            const data = await getContacts(id_user);
-            /// tratar aqui depois
-            console.log(data);
-
-            
+            const data = await getContacts(id_user);            
             setContactList(data.contacts)
         };
 
         
         loadContactList();
+        setContactDeletedFlag(false);
          
     }, [addModalOpen, editModalOpen, contactDeletedFlag]); 
 

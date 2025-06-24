@@ -4,6 +4,7 @@ import { getContacts, deleteAllContacts } from "@/app/api/contact.js";
 import { getEvents, deleteAllEvents } from "@/app/api/events.js";
 import { restoreData } from "@/app/api/backup.js";
 import { useRouter, usePathname } from "next/navigation";
+import dayjs from "dayjs";
 
 
 export default function BackupModal({ backupModalIsOpen, backupModalOnClose, id_user, onClose }) {
@@ -36,8 +37,14 @@ export default function BackupModal({ backupModalIsOpen, backupModalOnClose, id_
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "backup.json";
+        //a.download = "backup.json"
+        a.download = `backup-${dayjs().format("DD-MM-YYYY")}.json`; // nome do arquivo com data e hora
+         
         a.click();
+
+        alert("Backup realizado com sucesso!");
+
+        backupModalOnClose();
 
     }
 
