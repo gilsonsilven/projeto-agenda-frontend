@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+.swal-title {
+  font-size: 18px !important; /* ou 14px, 12px, etc */
+}
+
+.swal-container {
+  z-index: 9999 !important;
+}

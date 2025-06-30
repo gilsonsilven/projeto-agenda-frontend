@@ -25,8 +25,7 @@ export async function createUser(userData) {
 
     const result = await response.json();
 
-
-    console.log(result);
+    return result;
     
 } 
 
@@ -98,16 +97,17 @@ export async function loginUser(userData) {
     const result = await signIn("credentials", {
         email,
         password,
-        redirect: false
+        redirect:false
     });
 
+    console.log(result)
 
-
-
-    if (result.ok) {
-        return result
-  
-    } else {
-        return console.log("erro"); 
+    if(result?.error) {
+        return result;
+        
     }
+    else {
+        return "Login realizado com sucesso!"
+    }
+     
 }

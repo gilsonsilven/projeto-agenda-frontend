@@ -4,7 +4,7 @@
 import { createContact } from "@/app/api/contact.js";
 import ContactModalLayout from "./ContactModalLayout.jsx";
 import { useSession } from "next-auth/react";
-
+import { showError, showSuccess } from "@/app/utils/alerts.js";
 
 
 export default function AddContact({ isOpen, onClose  }) {
@@ -18,11 +18,17 @@ export default function AddContact({ isOpen, onClose  }) {
         const response = await createContact(contactData);
 
 
-        console.log(response);
-        // colocar uma mensagem de sucesso ou erro aqui
-        // lembrar de limpar os campos do modal depois de enviar
-        // adc algo para atualizar lista de contatos
-        onClose(); // fecha o modal depois de enviar
+        if(response?.errors) {
+            showError(response.message, response.errors)
+        }
+        else {
+            showSuccess(response.message)
+
+            const timer = setTimeout(() => {
+                onClose();
+            }, 1000)           
+        }
+
 
     }
 

@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { loginUser } from "../api/user.js";
 import { useRouter } from "next/navigation";
+import { showError, showSuccess } from "../utils/alerts.js";
 
 export default function SignIn() {
 
     const router = useRouter();
+
 
     const [userData, setUserData] = useState({
         email: '',
@@ -25,11 +27,29 @@ export default function SignIn() {
         e.preventDefault(); 
 
         
-        const response = await loginUser(userData);
+        const result = await loginUser(userData);
 
-        router.push("/events");
+        console.log("signIn linha 32",result)
+
+        
+        if(result?.error) {
+            const parsedResult = JSON.parse(result.error)
+        
+            showError(parsedResult.message, parsedResult?.errors);
+            return;
+        }
+        else {
+            showSuccess(result);
+
+            const timer = setTimeout(() => {
+                router.push("/events");
+            }, 2000)                          
+        }
+
+
+        
         /// tratar aqui depois
-        console.log(response);
+
     }
 
 
@@ -41,7 +61,7 @@ export default function SignIn() {
                         <h1 className="text-3xl font-semibold text-gray-800 mb-8">Acesse sua conta</h1>
                     </div>
                     <div>
-                        <input id="email" type="email" value={userData.email} onChange={handleChange} placeholder="Email" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>
+                        <input id="email" value={userData.email} onChange={handleChange} placeholder="Email" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>
                     </div>
                     <div>
                         <input id="password" type="password" value={userData.password} onChange={handleChange} placeholder="Senha" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>

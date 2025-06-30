@@ -12,6 +12,7 @@ import { deleteAllEvents } from '@/app/api/events.js';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import BackupModal from './BackupModal.jsx';
+import { showConfirm, showError, showSuccess } from '@/app/utils/alerts.js';
 
 export default function EditUserModal({isOpen, onClose, initialUserData}) {
 
@@ -59,18 +60,28 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
 
         const response = await updateUser(userData);
 
-        alert(response.message);
 
-        onClose(); // fecha o modal depois de enviar        
+        if(response?.errors) {
+            showError(response.message, response.errors)
+        }
+        else {
+            showSuccess(response.message)
+
+            const timer = setTimeout(() => {
+                onClose();
+            }, 1000)           
+        }     
     }
 
 
     const handleDelete = async (e) => {
         e.preventDefault();
 
-        if (!window.confirm("Tem certeza que deseja excluir esta conta?")) {
+
+        const response = await showConfirm("Tem certeza que deseja excluir esta conta?");
+        if(!response.isConfirmed) {
             return;
-        }        
+        }
 
         try {
             const contactList = await deleteAllContacts(id_user);
@@ -84,7 +95,7 @@ export default function EditUserModal({isOpen, onClose, initialUserData}) {
         router.push("/signIn");
        
     
-        const response = await deleteUser(userData);
+        await deleteUser(userData);
 
     }
 

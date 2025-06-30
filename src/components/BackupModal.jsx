@@ -5,6 +5,7 @@ import { getEvents, deleteAllEvents } from "@/app/api/events.js";
 import { restoreData } from "@/app/api/backup.js";
 import { useRouter, usePathname } from "next/navigation";
 import dayjs from "dayjs";
+import { showError, showSuccess } from "@/app/utils/alerts.js";
 
 
 export default function BackupModal({ backupModalIsOpen, backupModalOnClose, id_user, onClose }) {
@@ -42,7 +43,7 @@ export default function BackupModal({ backupModalIsOpen, backupModalOnClose, id_
          
         a.click();
 
-        alert("Backup realizado com sucesso!");
+        showSuccess("Backup realizado com sucesso!");
 
         backupModalOnClose();
 
@@ -62,9 +63,14 @@ export default function BackupModal({ backupModalIsOpen, backupModalOnClose, id_
                 await deleteAllContacts(id_user);
                 await deleteAllEvents(id_user);
 
-                const result = await restoreData(data, id_user);
+                const response = await restoreData(data, id_user);
                 
-                alert(result.message);
+                if(response?.errors) {
+                    showError(response.message, response.errors);
+                    return;
+
+                }
+                showSuccess(response.message);
 
                 /// Gambiarra para atualizar a página e recarregar os contatos e eventos
                 if(pathname === "/contacts") {

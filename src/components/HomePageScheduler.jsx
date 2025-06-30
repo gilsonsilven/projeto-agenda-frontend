@@ -6,6 +6,7 @@ import { getContacts } from "@/app/api/contact.js";
 import { useEffect, useState } from "react";
 import { ptBR } from "date-fns/locale";
 import { useSession } from "next-auth/react";
+import { showConfirm, showError, showSuccess } from "@/app/utils/alerts.js";
 
 
 export default function HomePageScheduler() {
@@ -60,6 +61,14 @@ export default function HomePageScheduler() {
 
       const response = await createEvent(data, id_user);
 
+      if(response?.errors) {
+        showError(response.message, response.errors)
+
+      }
+      else {
+        showSuccess(response.message)
+       
+      }
 
       setCreatedEventFlag(true);
 
@@ -71,6 +80,16 @@ export default function HomePageScheduler() {
 
       const response = await updateEvent(data);
 
+      console.log("pag eventos: ", response)
+
+      if(response?.errors) {
+        showError(response.message, response.errors)
+        return {event_id: response.event_id};
+      }
+      else {
+        showSuccess(response.message)
+      }
+
       return {event_id: response.event_id, ...event};      
 
     }
@@ -79,8 +98,9 @@ export default function HomePageScheduler() {
 
   const handleDelete = async (event) => {
 
-
     const response = await deleteEvent(event, id_user);
+
+    showSuccess(response.message)
 
     setDeletedEventFlag(true);
 
@@ -100,6 +120,13 @@ export default function HomePageScheduler() {
       events={eventList}
       editable={true}
       fields={[
+        {
+          name: "title",
+          type: "input",
+          config: {
+            label: "Título"
+          }
+        },
         {
           name: "subtitle",
           disabled: true,

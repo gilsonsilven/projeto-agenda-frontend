@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { createUser } from "@/app/api/user.js";
 import { useRouter } from "next/navigation";
+import { showError, showSuccess } from "../utils/alerts.js";
+
 
 export default function SignUp() {
 
@@ -38,10 +40,15 @@ export default function SignUp() {
         
         const response = await createUser(userData);
 
-
+        console.log(response)
         
-        /// tratar aqui depois
-        alert("Usuário cadastrado com sucesso!"); 
+        if(response?.errors) {
+            showError(response.message, response.errors);
+            return;
+        }
+
+        showSuccess(response.message);
+
         const timer = setTimeout(() => {
             router.push("/signIn");
         }, 2000)

@@ -11,6 +11,7 @@ import {
     Edit
 } from "iconsax-react"
 import { useSession } from "next-auth/react";
+import { showConfirm } from "../utils/alerts.js";
 
 
 
@@ -76,10 +77,11 @@ export default function Contacts() {
     }
 
 
-    const handleDeleteClick = (id_contact) => {
+    const handleDeleteClick = async (id_contact) => {
 
 
-        if (!window.confirm("Tem certeza que deseja excluir este contato?")) {
+        const response = await showConfirm('Tem certeza que deseja excluir este contato?');
+        if(!response.isConfirmed) {
             return;
         }
 
@@ -88,7 +90,7 @@ export default function Contacts() {
 
         const removeContact = async (data) => {
 
-            const response = await deleteContact(data)
+            await deleteContact(data)
 
    
             setContactDeletedFlag(true);

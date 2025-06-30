@@ -2,6 +2,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -23,17 +25,22 @@ export const authOptions = {
             credentials: "include"
           });
 
-          if (!res.ok) {
-            throw new Error("Credenciais inválidas");
-          }
-
           const result = await res.json();
+
+          console.log("auth linha 30", result)
+          console.log(res.ok)
+          if (!res.ok) {
+
+            return ({
+              message: result?.message,
+              errors: result?.errors || {Erro: ["Credenciais inválidas"]}
+            });
+            //throw new Error("Credenciais inválidas");
+          }
 
           // Se o backend respondeu corretamente
           if (result?.accessToken) {
             return result; // Retorna tudo de uma vez
-            
-
           }
 
           return null;
@@ -57,6 +64,14 @@ export const authOptions = {
 
   callbacks: {
 
+    async signIn ({user}) {
+
+      if (user?.errors) {
+        throw new Error(JSON.stringify({message: user?.message, errors: user?.errors}))
+      }
+      return true;
+    },
+
     /// user === result do authorize
     async jwt({ token, user }) {
       // Rodado na primeira vez após login
@@ -73,7 +88,9 @@ export const authOptions = {
       session.refreshToken = token.refreshToken;
       session.user = token.user;
       return session;
-    }
+    },
+
+
   },
 
   events: {
