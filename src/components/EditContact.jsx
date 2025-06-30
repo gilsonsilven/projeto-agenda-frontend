@@ -15,6 +15,10 @@ export default function EditContact({ isOpen, onClose, contactData}) {
 
         if(response?.errors) {
             showError(response.message, response.errors)
+            const timer = setTimeout(() => {
+                onClose();
+            }, 1000)
+            
         }
         else {
             showSuccess(response.message)
