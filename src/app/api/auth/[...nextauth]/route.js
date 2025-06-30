@@ -27,8 +27,7 @@ export const authOptions = {
 
           const result = await res.json();
 
-          console.log("auth linha 30", result)
-          console.log(res.ok)
+
           if (!res.ok) {
 
             return ({

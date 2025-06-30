@@ -72,16 +72,22 @@ export default function BackupModal({ backupModalIsOpen, backupModalOnClose, id_
                 }
                 showSuccess(response.message);
 
-                /// Gambiarra para atualizar a página e recarregar os contatos e eventos
-                if(pathname === "/contacts") {
-                    router.push("/events")
-                }
-                else if(pathname === "/events") {
-                    router.push("/contacts")
-                }
+                //// teste
+                const timer = setTimeout(() => {
+                    window.location.reload();
+                }, 2000)
+                
 
-                onClose(); // para fechar o modal de edição de usuário
-                backupModalOnClose();
+                /// Gambiarra para atualizar a página e recarregar os contatos e eventos
+                //if(pathname === "/contacts") {
+                //    router.push("/events")
+                //}
+                //else if(pathname === "/events") {
+                //    router.push("/contacts")
+                //}
+
+                //onClose(); // para fechar o modal de edição de usuário
+                //backupModalOnClose();
             };   
 
             reader.readAsText(file);
