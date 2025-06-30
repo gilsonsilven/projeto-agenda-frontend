@@ -10,7 +10,7 @@ import { useState } from "react";
 import { createUser } from "@/app/api/user.js";
 import { useRouter } from "next/navigation";
 import { showError, showSuccess } from "../utils/alerts.js";
-
+import { Eye, EyeSlash } from "iconsax-react";
 
 export default function SignUp() {
 
@@ -24,19 +24,33 @@ export default function SignUp() {
         phone: '',
         address: ''
     });
+    const [confPass, setConfPass] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfPassword, setShowConfPassword] = useState(false);
 
     const handleChange = (e) => {
         setUserData({...userData, [e.target.id]: e.target.value});
     };
 
+    const handleConfPassChange = (e) => {
+
+        
+        setConfPass(e.target.value);
+    }
+
     const handleDateChange = (date) => {
         setUserData({...userData, birth_date: date});
-        console.log(date);
+        
     };  
 
     const handleSubmit = async (e) => {
 
         e.preventDefault(); 
+
+        if(userData.password !== confPass) {
+            showError("",{Erro: ["Senhas não correspondem"]})
+            return;
+        }
         
         const response = await createUser(userData);
 
@@ -69,11 +83,17 @@ export default function SignUp() {
                     <div>
                         <input id="email" type="email" value={userData.email} onChange={handleChange} placeholder="Email" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>
                     </div>
-                    <div>
-                        <input id="password" type="password" value={userData.password} onChange={handleChange} placeholder="Senha" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>
+                    <div className="relative w-[300px]">
+                        <input id="password" type={showPassword ? "text" : "password"} value={userData.password} onChange={handleChange} placeholder="Senha" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>
+                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute top-1/2 right-3 -translate-y-1/2 focus:outline-none hover:cursor-pointer">
+                            {showPassword ? <EyeSlash size={20} color="#999999" /> : <Eye size={20} color="#999999"/>}
+                        </button>
                     </div>
-                    <div>
-                        <input id="confPass" type="password" placeholder="Confirmar Senha" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>
+                    <div className="relative w-[300px]">
+                        <input id="confPass" type={showConfPassword ? "text" : "password"} value={confPass} onChange={handleConfPassChange} placeholder="Confirmar Senha" className="border w-[300px] placeholder:text-black placeholder:opacity-60 border-[#d1d5db] rounded pl-3 py-2 border-opacity-30 hover:border-gray-700 my-2.5"></input>
+                        <button type="button" onClick={() => setShowConfPassword(!showConfPassword)} className="absolute top-1/2 right-3 -translate-y-1/2 focus:outline-none hover:cursor-pointer">
+                            {showConfPassword ? <EyeSlash size={20} color="#999999" /> : <Eye size={20} color="#999999"/>}
+                        </button>                    
                     </div>
                     <div className="my-2.5">
                         <LocalizationProvider adapterLocale="pt-br" dateAdapter={AdapterDayjs}>                         

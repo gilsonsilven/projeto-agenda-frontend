@@ -22,7 +22,7 @@ export default function PageLayout({children}) {
     if (status === "loading") {
         return (
             <div className="flex flex-col justify-center items-center h-screen">
-                <p className="mb-4">Carregando...</p>
+                <p className="mb-4 text-xl font-semibold">Carregando...</p>
                 <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
             </div>
         )
@@ -31,7 +31,7 @@ export default function PageLayout({children}) {
     if (status === "unauthenticated") {
         return (
             <div className="flex justify-center items-center h-screen">
-                <p>Você precisa estar logado para acessar esta página. Redirecionando...</p>
+                <p className="text-xl font-semibold">Você precisa estar logado para acessar esta página. Redirecionando...</p>
             </div>
         )
     }        
