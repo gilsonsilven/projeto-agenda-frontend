@@ -17,7 +17,7 @@ import { showConfirm } from "../utils/alerts.js";
 
 export default function Contacts() {
 
-    const {data: session, status} = useSession();
+    const {data: session} = useSession();
     const id_user = session?.user?.id_user;   
     const router = useRouter();
 
@@ -29,29 +29,8 @@ export default function Contacts() {
     const [selectedContact, setSelectedContact] = useState(''); //pegar o id do contato para editar as info do contato
 
 
-    if (status === "loading") {
-        return (
-            <div className="flex flex-col justify-center items-center h-screen">
-                <p className="mb-4">Carregando...</p>
-                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
-            </div>
-        )
-    }
-
-    if (status === "unauthenticated") {
-        const timer = setTimeout(() => {
-            router.push("/signIn");
-        }, 5000)
-
-        return (
-            <div className="flex justify-center items-center h-screen">
-                <p>Você precisa estar logado para acessar esta página. Redirecionando...</p>
-            </div>
-        )
-    }
-
     useEffect(() => {
-
+        if (!id_user) return; 
       
         const loadContactList = async () => {
 
@@ -64,7 +43,7 @@ export default function Contacts() {
         loadContactList();
         setContactDeletedFlag(false);
          
-    }, [addModalOpen, editModalOpen, contactDeletedFlag]); 
+    }, [id_user, addModalOpen, editModalOpen, contactDeletedFlag]); 
 
     
     const handleEditClick = (id_contact) => {

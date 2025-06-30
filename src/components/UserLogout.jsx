@@ -5,6 +5,7 @@ import {
 } from "iconsax-react";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { showConfirm } from "@/app/utils/alerts.js";
 
 export default function UserLogout() {
 
@@ -12,12 +13,13 @@ export default function UserLogout() {
 
         //e.preventDefault();
 
-        if (!window.confirm("Tem certeza que deseja sair?")) {
+        const response = await showConfirm('Tem certeza que deseja sair?');
+        if(!response.isConfirmed) {
             return;
         }
         
         try {
-            const response = await signOut({
+            await signOut({
                 callbackUrl: "/signIn"
             });
         }

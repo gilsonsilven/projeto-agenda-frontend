@@ -15,7 +15,6 @@ export default function UserProfile() {
     const [userData, setUserData] = useState([]);
     const [editModalOpen, setEditModalOpen] = useState(false);
 
-
     useEffect(() => {
 
         const loadUserData = async () => {
