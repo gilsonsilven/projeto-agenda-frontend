@@ -16,7 +16,7 @@ export default function UserProfile() {
     const [editModalOpen, setEditModalOpen] = useState(false);
 
     useEffect(() => {
-
+        
         const loadUserData = async () => {
             
             const data = await getUser(id_user);

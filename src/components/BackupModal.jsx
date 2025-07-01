@@ -39,7 +39,7 @@ export default function BackupModal({ backupModalIsOpen, backupModalOnClose, id_
         const a = document.createElement("a");
         a.href = url;
         //a.download = "backup.json"
-        a.download = `backup-${dayjs().format("DD-MM-YYYY")}.json`; // nome do arquivo com data e hora
+        a.download = `backup-${dayjs().format("DD-MM-YYYY")}.json`; 
          
         a.click();
 
@@ -78,13 +78,6 @@ export default function BackupModal({ backupModalIsOpen, backupModalOnClose, id_
                 }, 2000)
                 
 
-                /// Gambiarra para atualizar a página e recarregar os contatos e eventos
-                //if(pathname === "/contacts") {
-                //    router.push("/events")
-                //}
-                //else if(pathname === "/events") {
-                //    router.push("/contacts")
-                //}
 
                 //onClose(); // para fechar o modal de edição de usuário
                 //backupModalOnClose();
